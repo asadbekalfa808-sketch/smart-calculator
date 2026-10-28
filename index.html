@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniCalc 114 — Ko'p Tarmoqli Universal Kalkulyator</title>
+  <meta name="description" content="114 ta funksiyali universal kalkulyator: arifmetika, ilmiy, birliklar konvertori, moliya, dasturchilar, algebra, vaqt va AI vositalari.">
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- Tashqi kutubxonalar (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body data-theme="light">
+
+  <div class="app-container">
+    <!-- ======================================================================
+         SIDEBAR
+         ====================================================================== -->
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="#" class="brand">
+          <div class="brand-icon">∑</div>
+          <div class="brand-text">
+            <h1 data-i18n="app_title">OmniCalc 114</h1>
+            <p data-i18n="app_subtitle">Universal Kalkulyator</p>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-menu">
+        <div class="menu-category-title" data-i18n="menu_cat_calc">Kalkulyatorlar</div>
+        <a href="#core" class="menu-item active" data-section="sec-core">
+          <div class="menu-item-left">
+            <span>🔢</span>
+            <span data-i18n="sec_core">Asosiy & Ilmiy</span>
+          </div>
+          <span class="menu-badge">1–23</span>
+        </a>
+        <a href="#units" class="menu-item" data-section="sec-units">
+          <div class="menu-item-left">
+            <span>📏</span>
+            <span data-i18n="sec_units">O'lchov birliklari</span>
+          </div>
+          <span class="menu-badge">24–39</span>
+        </a>
+        <a href="#finance" class="menu-item" data-section="sec-finance">
+          <div class="menu-item-left">
+            <span>💰</span>
+            <span data-i18n="sec_finance">Moliya & Iqtisod</span>
+          </div>
+          <span class="menu-badge">40–51</span>
+        </a>
+
+        <div class="menu-category-title" data-i18n="menu_cat_science">Ilm-fan & Texnologiya</div>
+        <a href="#developer" class="menu-item" data-section="sec-developer">
+          <div class="menu-item-left">
+            <span>💻</span>
+            <span data-i18n="sec_developer">Dasturchilar uchun</span>
+          </div>
+          <span class="menu-badge">52–61</span>
+        </a>
+        <a href="#graph" class="menu-item" data-section="sec-graph">
+          <div class="menu-item-left">
+            <span>📈</span>
+            <span data-i18n="sec_graph">Grafik & Jadvallar</span>
+          </div>
+          <span class="menu-badge">62–69</span>
+        </a>
+        <a href="#algebra" class="menu-item" data-section="sec-algebra">
+          <div class="menu-item-left">
+            <span>📐</span>
+            <span data-i18n="sec_algebra">Algebra & Tenglama</span>
+          </div>
+          <span class="menu-badge">70–77</span>
+        </a>
+        <a href="#special" class="menu-item" data-section="sec-special">
+          <div class="menu-item-left">
+            <span>🎯</span>
+            <span data-i18n="sec_special">Maxsus hisoblar</span>
+          </div>
+          <span class="menu-badge">78–84</span>
+        </a>
+
+        <div class="menu-category-title" data-i18n="menu_cat_tools">Vaqt & Ko'ngilochar</div>
+        <a href="#calendar" class="menu-item" data-section="sec-calendar">
+          <div class="menu-item-left">
+            <span>📅</span>
+            <span data-i18n="sec_calendar">Kalendar & Vaqt</span>
+          </div>
+          <span class="menu-badge">95–100</span>
+        </a>
+        <a href="#games" class="menu-item" data-section="sec-games">
+          <div class="menu-item-left">
+            <span>🎮</span>
+            <span data-i18n="sec_games">O'yinlar & Mashqlar</span>
+          </div>
+          <span class="menu-badge">101–106</span>
+        </a>
+        <a href="#innovation" class="menu-item" data-section="sec-innovation">
+          <div class="menu-item-left">
+            <span>✨</span>
+            <span data-i18n="sec_innovation">Innovatsiya & AI</span>
+          </div>
+          <span class="menu-badge">107–114</span>
+        </a>
+
+        <div class="menu-category-title" data-i18n="menu_cat_extras">Qo'shimchalar</div>
+        <a href="#settings" class="menu-item" data-section="sec-settings">
+          <div class="menu-item-left">
+            <span>⚙️</span>
+            <span data-i18n="sec_settings">Sozlamalar & Tarix</span>
+          </div>
+          <span class="menu-badge">85–94</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span>© 2026 OmniCalc</span>
+        <span>v2.0 Pro</span>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         MAIN CONTENT WRAPPER
+         ====================================================================== -->
+    <div class="main-wrapper">
+      <!-- TOP NAVBAR -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="sidebar-toggle-btn" id="mobileSidebarToggle" aria-label="Toggle Menu">☰</button>
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="globalSearchInput" placeholder="114 ta funksiyadan qidirish..." data-i18n-ph="search_placeholder">
+            <div class="search-dropdown" id="searchDropdown"></div>
+          </div>
+        </div>
+
+        <div class="navbar-right">
+          <div class="digital-clock" id="topDigitalClock">00:00:00</div>
+          
+          <select class="lang-select" id="langSelect" aria-label="Select Language">
+            <option value="uz">🇺🇿 O'zbek</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="en">🇬🇧 English</option>
+          </select>
+
+          <button class="action-btn icon-only" id="themeToggleBtn" title="Tungi / Kunduzgi rejim">🌙</button>
+          <button class="action-btn icon-only" id="settingsModalBtn" title="Sozlamalar">⚙️</button>
+        </div>
+      </header>
+
+      <!-- BODY SECTIONS -->
+      <main class="content-body">
+
+        <!-- ==================================================================
+             SECTION 1: ASOSIY VA ILMIY KALKULYATOR (1–23)
+             ================================================================== -->
+        <section class="section-pane active" id="sec-core">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_core">Asosiy & Ilmiy Kalkulyator</h2>
+              <p data-i18n="desc_core">1–23: Arifmetika, darajalar, ildizlar va ilmiy funksiyalar</p>
+            </div>
+            <span class="section-count-tag">1–23 Funksiyalar</span>
+          </div>
+
+          <div class="calc-wrapper">
+            <!-- Asosiy kalkulyator -->
+            <div class="calculator-body">
+              <div class="calc-status-bar">
+                <div class="calc-mode-toggle">
+                  <span class="mode-badge active" id="angleDeg">DEG</span>
+                  <span class="mode-badge" id="angleRad">RAD</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span id="memIndicator" style="opacity:0.3; font-weight:bold; cursor:pointer;" title="Xotira (M)">M</span>
+                  <button class="copy-btn" data-copy-target="calcMainDisplay" title="Nusxalash">📋</button>
+                </div>
+              </div>
+
+              <div class="calc-screen">
+                <div class="calc-expression" id="calcExpression"></div>
+                <div class="calc-main-display" id="calcMainDisplay">0</div>
+              </div>
+
+              <!-- Klaviaturadagi tugmalar: 5 ustunli professional ilmiy set -->
+              <div class="calc-grid" id="coreCalcGrid">
+                <!-- 1-qator: Xotira & O'chirish -->
+                <button class="calc-btn sci" data-action="memory" data-val="MC">MC</button>
+                <button class="calc-btn sci" data-action="memory" data-val="MR">MR</button>
+                <button class="calc-btn sci" data-action="memory" data-val="M+">M+</button>
+                <button class="calc-btn sci" data-action="memory" data-val="M-">M−</button>
+                <button class="calc-btn clear" data-action="clear">C</button>
+
+                <!-- 2-qator: Trigonometriya & Ildiz -->
+                <button class="calc-btn sci" data-action="func" data-val="sin">sin</button>
+                <button class="calc-btn sci" data-action="func" data-val="cos">cos</button>
+                <button class="calc-btn sci" data-action="func" data-val="tan">tan</button>
+                <button class="calc-btn sci" data-action="func" data-val="sqrt">√x</button>
+                <button class="calc-btn clear" data-action="backspace">⌫</button>
+
+                <!-- 3-qator: Arksinus, daraja va konstantalar -->
+                <button class="calc-btn sci" data-action="func" data-val="asin">asin</button>
+                <button class="calc-btn sci" data-action="func" data-val="acos">acos</button>
+                <button class="calc-btn sci" data-action="func" data-val="atan">atan</button>
+                <button class="calc-btn sci" data-val="^">xʸ</button>
+                <button class="calc-btn op" data-val="/">÷</button>
+
+                <!-- 4-qator: Logarifmlar va giperbolik -->
+                <button class="calc-btn sci" data-action="func" data-val="log">log</button>
+                <button class="calc-btn sci" data-action="func" data-val="ln">ln</button>
+                <button class="calc-btn sci" data-action="func" data-val="exp">eˣ</button>
+                <button class="calc-btn sci" data-val="%">%</button>
+                <button class="calc-btn op" data-val="*">×</button>
+
+                <!-- 5-qator: Raqamlar 7-9 & Giperbolik -->
+                <button class="calc-btn sci" data-action="func" data-val="sinh">sinh</button>
+                <button class="calc-btn" data-val="7">7</button>
+                <button class="calc-btn" data-val="8">8</button>
+                <button class="calc-btn" data-val="9">9</button>
+                <button class="calc-btn op" data-val="-">−</button>
+
+                <!-- 6-qator: Raqamlar 4-6 & Giperbolik -->
+                <button class="calc-btn sci" data-action="func" data-val="cosh">cosh</button>
+                <button class="calc-btn" data-val="4">4</button>
+                <button class="calc-btn" data-val="5">5</button>
+                <button class="calc-btn" data-val="6">6</button>
+                <button class="calc-btn op" data-val="+">+</button>
+
+                <!-- 7-qator: Raqamlar 1-3 & Qavslar -->
+                <button class="calc-btn sci" data-action="func" data-val="tanh">tanh</button>
+                <button class="calc-btn" data-val="1">1</button>
+                <button class="calc-btn" data-val="2">2</button>
+                <button class="calc-btn" data-val="3">3</button>
+                <button class="calc-btn sci" data-val="(">(</button>
+
+                <!-- 8-qator: Modul, Raqam 0, Nuqta, Qavs, Faktorial -->
+                <button class="calc-btn sci" data-action="func" data-val="abs">|x|</button>
+                <button class="calc-btn" data-val="0">0</button>
+                <button class="calc-btn" data-val=".">.</button>
+                <button class="calc-btn sci" data-action="func" data-val="fact">n!</button>
+                <button class="calc-btn sci" data-val=")">)</button>
+
+                <!-- 9-qator: Konstantalar, Permutatsiya/Kombinatsiya va Tenglik -->
+                <button class="calc-btn sci" data-action="constant" data-val="PI">π</button>
+                <button class="calc-btn sci" data-action="constant" data-val="E">e</button>
+                <button class="calc-btn sci" data-action="func" data-val="nPr">nPr</button>
+                <button class="calc-btn sci" data-action="func" data-val="nCr">nCr</button>
+                <button class="calc-btn equals" data-action="evaluate">=</button>
+              </div>
+            </div>
+
+            <!-- Yon panel: Tarix va Xotira ro'yxati -->
+            <div class="calc-side-panel">
+              <div class="tabs-nav">
+                <button class="tab-btn active" id="tabHistoryBtn" data-i18n="history">Tarix</button>
+              </div>
+              <div class="tab-content" id="historyList">
+                <div style="text-align:center; padding:20px; color:var(--text-muted); font-size:13px;" data-i18n="empty_history">Tarix bo'sh</div>
+              </div>
+              <div style="display:flex; gap:8px; margin-top:12px;">
+                <button class="btn-secondary btn-sm" style="flex:1;" id="clearHistoryBtn" data-i18n="clear">Tozalash</button>
+                <button class="btn-secondary btn-sm" id="exportCsvBtn" title="CSV yuklash">CSV</button>
+                <button class="btn-secondary btn-sm" id="exportPdfBtn" title="PDF hisobot">PDF</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 2: O'LCHOV BIRLIKLARI AYLANTIRISH (24–39)
+             ================================================================== -->
+        <section class="section-pane" id="sec-units">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_units">O'lchov Birliklari Konvertori</h2>
+              <p data-i18n="desc_units">24–39: 16 xil fizik kattaliklarni bir-biriga aylantirish</p>
+            </div>
+            <span class="section-count-tag">24–39 Funksiyalar</span>
+          </div>
+
+          <div class="card" style="max-width:800px; margin:0 auto;">
+            <div class="card-title-row">
+              <h3><span>🔄</span> Universal Konvertor</h3>
+              <span class="fn-badge">16 toifa</span>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label">Toifani tanlang:</label>
+              <select class="select-field" id="unitCategorySelect"></select>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr auto 1fr; gap:16px; align-items:flex-end;">
+              <div class="input-group">
+                <label class="input-label">Qaysi birlikdan:</label>
+                <input type="number" class="input-field" id="unitFromValue" value="1" placeholder="Qiymat">
+                <select class="select-field" id="unitFromUnit" style="margin-top:6px;"></select>
+              </div>
+
+              <div style="padding-bottom:10px;">
+                <button class="action-btn" id="unitSwapBtn" title="O'rnini almashtirish">⇄</button>
+              </div>
+
+              <div class="input-group">
+                <label class="input-label">Qaysi birlikka:</label>
+                <input type="text" class="input-field" id="unitToValue" readonly placeholder="Natija">
+                <select class="select-field" id="unitToUnit" style="margin-top:6px;"></select>
+              </div>
+            </div>
+
+            <div class="result-box">
+              <div class="result-box-header">
+                <span>Konvertatsiya formulasi</span>
+                <button class="copy-btn" data-copy-target="unitToValue">📋</button>
+              </div>
+              <div class="result-value" id="unitFormulaDetail">1 m = 100 cm</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 3: MOLIYAVIY KALKULYATOR (40–51)
+             ================================================================== -->
+        <section class="section-pane" id="sec-finance">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_finance">Moliyaviy & Iqtisodiy Kalkulyator</h2>
+              <p data-i18n="desc_finance">40–51: Kredit, foizlar, soliq, byudjet, lizing va investitsiyalar</p>
+            </div>
+            <span class="section-count-tag">40–51 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 40 & 41: Kredit kalkulyatori -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🏦</span> Kredit va Oylik To'lov</h3>
+                <span class="fn-badge">#40, #41</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Kredit summasi (so'mda):</label>
+                <input type="number" class="input-field" id="loanAmount" value="50000000">
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Yillik foiz stavkasi (%):</label>
+                  <input type="number" class="input-field" id="loanRate" value="24">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Muddat (oylarda):</label>
+                  <input type="number" class="input-field" id="loanMonths" value="24">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcLoanBtn" data-i18n="calculate">Hisoblash</button>
+              <div class="result-box">
+                <div>Oylik annuitet to'lov: <strong id="loanMonthlyPayment">0 so'm</strong></div>
+                <div>Jami to'lanadigan summa: <strong id="loanTotalPayment">0 so'm</strong></div>
+                <div>To'langan jami foiz: <strong id="loanTotalInterest">0 so'm</strong></div>
+              </div>
+            </div>
+
+            <!-- 42 & 43: Foizli daromadlar -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📈</span> Oddiy va Murakkab Foiz</h3>
+                <span class="fn-badge">#42, #43</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Boshlang'ich summa:</label>
+                  <input type="number" class="input-field" id="simpPrincipal" value="10000000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Yillik stavka (%):</label>
+                  <input type="number" class="input-field" id="simpRate" value="20">
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Muddat (yillarda):</label>
+                <input type="number" class="input-field" id="simpYears" value="3">
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button class="btn-primary" style="flex:1;" id="calcSimpleIntBtn">Oddiy foiz</button>
+                <button class="btn-secondary" style="flex:1;" id="calcCompIntBtn">Murakkab foiz</button>
+              </div>
+              <div class="result-box" id="simpResult">Natija bu yerda ko'rinadi</div>
+            </div>
+
+            <!-- 44 & 45: Chegirma va Soliq -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🏷️</span> Chegirma va Soliq (QQS)</h3>
+                <span class="fn-badge">#44, #45</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Asl narx / Summa:</label>
+                  <input type="number" class="input-field" id="discPrice" value="500000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Chegirma (%):</label>
+                  <input type="number" class="input-field" id="discPercent" value="15">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcDiscountBtn">Chegirmani hisoblash</button>
+              <div class="result-box" id="discResult">...</div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+                <div class="input-group">
+                  <label class="input-label">Summa:</label>
+                  <input type="number" class="input-field" id="taxAmount" value="1000000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Soliq stavkasi (%):</label>
+                  <input type="number" class="input-field" id="taxRate" value="12">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Holat:</label>
+                  <select class="select-field" id="taxMode">
+                    <option value="add">Qo'shish (+QQS)</option>
+                    <option value="include">Ichida (ajratish)</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-secondary" id="calcTaxBtn">Soliqni hisoblash</button>
+              <div class="result-box" id="taxResult">...</div>
+            </div>
+
+            <!-- 46: Valyuta konvertori -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>💱</span> Valyuta Konvertori</h3>
+                <span class="fn-badge">#46</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Miqdor:</label>
+                <input type="number" class="input-field" id="currFromVal" value="100">
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Qaysi valyuta:</label>
+                  <select class="select-field" id="currFromSel">
+                    <option value="USD">USD ($)</option>
+                    <option value="UZS">UZS (so'm)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="RUB">RUB (₽)</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Qaysi valyutaga:</label>
+                  <select class="select-field" id="currToSel">
+                    <option value="UZS">UZS (so'm)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="RUB">RUB (₽)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="input-label">USD kursi (qo'lda kiritish):</label>
+                <input type="number" class="input-field" id="currCustomRate" value="12850">
+              </div>
+              <div class="result-box">
+                <div class="result-box-header"><span>Natija</span></div>
+                <div class="result-value" id="currResult">1,285,000 UZS</div>
+              </div>
+            </div>
+
+            <!-- 47, 48: Byudjet va Jamg'arma maqsadi -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📊</span> Oylik Budjet (50/30/20) & Jamg'arma</h3>
+                <span class="fn-badge">#47, #48</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Oylik sof daromad:</label>
+                <input type="number" class="input-field" id="budgetIncome" value="6000000">
+              </div>
+              <button class="btn-primary" id="calcBudgetBtn">Budjetni taqsimlash</button>
+              <div class="result-box" id="budgetResult">...</div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+                <div class="input-group">
+                  <label class="input-label">Maqsad summa:</label>
+                  <input type="number" class="input-field" id="goalTarget" value="50000000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Mavjud summa:</label>
+                  <input type="number" class="input-field" id="goalCurrent" value="10000000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Oylik jamg'arma:</label>
+                  <input type="number" class="input-field" id="goalMonthly" value="3000000">
+                </div>
+              </div>
+              <button class="btn-secondary" id="calcGoalBtn">Yetish muddatini hisoblash</button>
+              <div class="result-box" id="goalResult">...</div>
+            </div>
+
+            <!-- 49, 50, 51: ROI, Inflyatsiya va Depozit/Lizing -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>💎</span> ROI, Inflyatsiya va Lizing</h3>
+                <span class="fn-badge">#49, #50, #51</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Kiritilgan sarmoya:</label>
+                  <input type="number" class="input-field" id="roiInvested" value="20000000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Qaytarilgan tushum:</label>
+                  <input type="number" class="input-field" id="roiReturned" value="28000000">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcRoiBtn">ROI hisoblash</button>
+              <div class="result-box" id="roiResult">...</div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-top:8px;">
+                <div class="input-group">
+                  <label class="input-label">Summa:</label>
+                  <input type="number" class="input-field" id="infAmount" value="10000000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Inflyatsiya (%):</label>
+                  <input type="number" class="input-field" id="infRate" value="10">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Yil:</label>
+                  <input type="number" class="input-field" id="infYears" value="5">
+                </div>
+              </div>
+              <button class="btn-secondary" id="calcInfBtn">Inflyatsiyani hisoblash</button>
+              <div class="result-box" id="infResult">...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 4: DASTURCHILAR UCHUN (52–61)
+             ================================================================== -->
+        <section class="section-pane" id="sec-developer">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_developer">Dasturchilar Uchun Vositalar</h2>
+              <p data-i18n="desc_developer">52–61: Sanoq tizimlari, bitwise amallar, Base64, Subnet, ASCII</p>
+            </div>
+            <span class="section-count-tag">52–61 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 52-55: Sanoq tizimlari -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>0️⃣1️⃣</span> Sanoq Tizimlari Konvertori</h3>
+                <span class="fn-badge">#52–#55</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">O'nlik (Decimal - 10):</label>
+                <input type="number" class="input-field" id="radixDec" value="255">
+              </div>
+              <div class="input-group">
+                <label class="input-label">Ikkilik (Binary - 2):</label>
+                <input type="text" class="input-field" id="radixBin" value="11111111" style="font-family:monospace;">
+              </div>
+              <div class="input-group">
+                <label class="input-label">Sakkizlik (Octal - 8):</label>
+                <input type="text" class="input-field" id="radixOct" value="377" style="font-family:monospace;">
+              </div>
+              <div class="input-group">
+                <label class="input-label">O'n oltilik (Hexadecimal - 16):</label>
+                <input type="text" class="input-field" id="radixHex" value="FF" style="font-family:monospace;">
+              </div>
+            </div>
+
+            <!-- 56-58: Bitli amallar -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⚡</span> Bitwise Amallar (AND, OR, XOR, <<, >>)</h3>
+                <span class="fn-badge">#56–#58</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">A soni:</label>
+                  <input type="number" class="input-field" id="bitA" value="12">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">B soni:</label>
+                  <input type="number" class="input-field" id="bitB" value="5">
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Amalni tanlang:</label>
+                <select class="select-field" id="bitOp">
+                  <option value="AND">AND (&)</option>
+                  <option value="OR">OR (|)</option>
+                  <option value="XOR">XOR (^)</option>
+                  <option value="NOT">NOT (~A)</option>
+                  <option value="LSHIFT">Left Shift (A &lt;&lt; B)</option>
+                  <option value="RSHIFT">Right Shift (A &gt;&gt; B)</option>
+                </select>
+              </div>
+              <button class="btn-primary" id="calcBitwiseBtn" data-i18n="calculate">Hisoblash</button>
+              <div class="result-box">
+                <div>O'nlik (Dec): <strong id="bitResultDec">0</strong></div>
+                <div>Ikkilik (Bin): <strong id="bitResultBin" style="font-family:monospace;">00000000</strong></div>
+                <div>Hex: <strong id="bitResultHex" style="font-family:monospace;">0x0</strong></div>
+              </div>
+            </div>
+
+            <!-- 59: Base64 -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🔤</span> Base64 Kodlash va Dekodlash</h3>
+                <span class="fn-badge">#59</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Matn yoki Base64:</label>
+                <textarea class="input-field" id="b64Input" rows="3" placeholder="Salom dunyo!">Salom dunyo!</textarea>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button class="btn-primary" style="flex:1;" id="b64EncodeBtn">Base64 Kodlash</button>
+                <button class="btn-secondary" style="flex:1;" id="b64DecodeBtn">Dekodlash</button>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Natija:</label>
+                <textarea class="input-field" id="b64Output" rows="3" readonly style="font-family:monospace;"></textarea>
+              </div>
+            </div>
+
+            <!-- 60: IP Subnet Kalkulyatori -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🌐</span> IP Manzil va Subnet Kalkulyatori</h3>
+                <span class="fn-badge">#60</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">IP Manzil:</label>
+                  <input type="text" class="input-field" id="subnetIp" value="192.168.1.50">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">CIDR Mask:</label>
+                  <select class="select-field" id="subnetCidr">
+                    <option value="24">/24 (255.255.255.0)</option>
+                    <option value="16">/16 (255.255.0.0)</option>
+                    <option value="8">/8 (255.0.0.0)</option>
+                    <option value="28">/28 (255.255.255.240)</option>
+                    <option value="30">/30 (255.255.255.252)</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-primary" id="calcSubnetBtn">Tarmoqni hisoblash</button>
+              <div class="result-box" id="subnetResult">
+                <div>Tarmoq manzili: 192.168.1.0</div>
+                <div>Broadcast: 192.168.1.255</div>
+                <div>Mavjud hostlar: 254</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 61: ASCII Jadval -->
+          <div class="card" style="margin-top:20px;">
+            <div class="card-title-row">
+              <h3><span>🗂️</span> ASCII Belgilar Jadvali va Qidiruv</h3>
+              <span class="fn-badge">#61</span>
+            </div>
+            <div class="input-group" style="max-width:320px;">
+              <input type="text" class="input-field" id="asciiSearch" placeholder="Belgi yoki kod bo'yicha qidirish...">
+            </div>
+            <div style="max-height:260px; overflow-y:auto; border:1px solid var(--border-color); border-radius:var(--radius-md);">
+              <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+                <thead style="background:var(--bg-tertiary); position:sticky; top:0;">
+                  <tr>
+                    <th style="padding:8px 10px;">Dec</th>
+                    <th style="padding:8px 10px;">Hex</th>
+                    <th style="padding:8px 10px;">Bin</th>
+                    <th style="padding:8px 10px;">Belgi</th>
+                  </tr>
+                </thead>
+                <tbody id="asciiTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 5: GRAFIK VA JADVALLAR (62–69)
+             ================================================================== -->
+        <section class="section-pane" id="sec-graph">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_graph">Grafik va Jadvallar</h2>
+              <p data-i18n="desc_graph">62–69: Funksiya grafiki, trigonometriya, statistika, progressiyalar</p>
+            </div>
+            <span class="section-count-tag">62–69 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 62, 63, 69: Funksiya chizuvchi Canvas -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📈</span> y = f(x) Funksiya Grafigi</h3>
+                <span class="fn-badge">#62, #63, #69</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Funksiya formulasi f(x):</label>
+                  <input type="text" class="input-field" id="plotExpression" value="Math.sin(x)">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Shablon:</label>
+                  <select class="select-field" id="trigPresetSelect">
+                    <option value="Math.sin(x)">sin(x)</option>
+                    <option value="Math.cos(x)">cos(x)</option>
+                    <option value="Math.tan(x)">tan(x)</option>
+                    <option value="x*x - 4">x² - 4</option>
+                    <option value="Math.sin(x)*x">x · sin(x)</option>
+                  </select>
+                </div>
+              </div>
+              <div style="display:flex; gap:10px;">
+                <button class="btn-primary" style="flex:1;" id="plotFuncBtn">Grafikni chizish</button>
+                <button class="btn-secondary" id="downloadGraphBtn" title="PNG rasm sifatida yuklab olish">Yuklab olish</button>
+              </div>
+              <div style="display:flex; justify-content:center; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:10px;">
+                <canvas id="functionCanvas" width="460" height="260" style="width:100%; max-width:460px; height:auto;"></canvas>
+              </div>
+            </div>
+
+            <!-- 64, 65, 66: Statistika & Dinamik jadval -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📊</span> Statistik Tahlil va Dinamik Grafik</h3>
+                <span class="fn-badge">#64–#66</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Ma'lumotlar qatori (vergul bilan):</label>
+                <textarea class="input-field" id="statsDataInput" rows="2" placeholder="10, 15, 20, 25, 20, 35, 40">10, 15, 20, 25, 20, 35, 40</textarea>
+              </div>
+              <button class="btn-primary" id="calcStatsBtn">Tahlil qilish</button>
+              <div class="result-box" id="statsResult">O'rtacha, Mediana, Dispersiya...</div>
+              <div style="display:flex; justify-content:center; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:8px;">
+                <canvas id="statsCanvas" width="460" height="120" style="width:100%; max-width:460px; height:auto;"></canvas>
+              </div>
+            </div>
+
+            <!-- 67: Progressiya -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🔢</span> Arifmetik va Geometrik Progressiya</h3>
+                <span class="fn-badge">#67</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Turi:</label>
+                  <select class="select-field" id="progType">
+                    <option value="arithmetic">Arifmetik (d)</option>
+                    <option value="geometric">Geometrik (q)</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label class="input-label">1-hadi (a₁):</label>
+                  <input type="number" class="input-field" id="progA1" value="2">
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Farq (d yoki q):</label>
+                  <input type="number" class="input-field" id="progDiff" value="3">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Hadlar soni (n):</label>
+                  <input type="number" class="input-field" id="progN" value="10">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcProgBtn" data-i18n="calculate">Hisoblash</button>
+              <div class="result-box" id="progResult">...</div>
+            </div>
+
+            <!-- 68: Sonli ketma-ketliklar -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🌀</span> Sonli Ketma-ketliklar</h3>
+                <span class="fn-badge">#68</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Ketma-ketlik turi:</label>
+                  <select class="select-field" id="seqType">
+                    <option value="fibonacci">Fibonachchi ketma-ketligi</option>
+                    <option value="prime">Tub sonlar (Prime numbers)</option>
+                    <option value="squares">Kvadrat sonlar (1, 4, 9...)</option>
+                    <option value="cubes">Kub sonlar (1, 8, 27...)</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Soni:</label>
+                  <input type="number" class="input-field" id="seqCount" value="15">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcSeqBtn">Generatsiya qilish</button>
+              <div class="result-box" id="seqResult">...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 6: ALGEBRA VA TENGLAMALAR (70–77)
+             ================================================================== -->
+        <section class="section-pane" id="sec-algebra">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_algebra">Algebra va Tenglamalar</h2>
+              <p data-i18n="desc_algebra">70–77: Kvadrat va kub tenglamalar, Kramer qoidasi, matritsalar</p>
+            </div>
+            <span class="section-count-tag">70–77 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 70: Kvadrat tenglama -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📐</span> Kvadrat Tenglama (ax² + bx + c = 0)</h3>
+                <span class="fn-badge">#70</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+                <div class="input-group">
+                  <label class="input-label">a:</label>
+                  <input type="number" class="input-field" id="quadA" value="1">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">b:</label>
+                  <input type="number" class="input-field" id="quadB" value="-5">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">c:</label>
+                  <input type="number" class="input-field" id="quadC" value="6">
+                </div>
+              </div>
+              <button class="btn-primary" id="solveQuadBtn">Tenglamani yechish</button>
+              <div class="result-box" id="quadResult">...</div>
+            </div>
+
+            <!-- 71: Kub tenglama -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🧊</span> Kub Tenglama (ax³ + bx² + cx + d = 0)</h3>
+                <span class="fn-badge">#71</span>
+              </div>
+              <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:6px;">
+                <div class="input-group">
+                  <label class="input-label">a:</label>
+                  <input type="number" class="input-field" id="cubA" value="1">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">b:</label>
+                  <input type="number" class="input-field" id="cubB" value="-6">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">c:</label>
+                  <input type="number" class="input-field" id="cubC" value="11">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">d:</label>
+                  <input type="number" class="input-field" id="cubD" value="-6">
+                </div>
+              </div>
+              <button class="btn-primary" id="solveCubicBtn">Kub tenglamani yechish</button>
+              <div class="result-box" id="cubResult">...</div>
+            </div>
+
+            <!-- 72: Kramer tizimi -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⛓️</span> Chiziqli Tenglamalar Tizimi (Kramer)</h3>
+                <span class="fn-badge">#72</span>
+              </div>
+              <div style="font-size:12px; color:var(--text-muted);">1-tenglama: a₁·x + b₁·y = c₁</div>
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+                <input type="number" class="input-field" id="kramA1" value="2" placeholder="a1">
+                <input type="number" class="input-field" id="kramB1" value="3" placeholder="b1">
+                <input type="number" class="input-field" id="kramC1" value="13" placeholder="c1">
+              </div>
+              <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">2-tenglama: a₂·x + b₂·y = c₂</div>
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+                <input type="number" class="input-field" id="kramA2" value="1" placeholder="a2">
+                <input type="number" class="input-field" id="kramB2" value="-1" placeholder="b2">
+                <input type="number" class="input-field" id="kramC2" value="-1" placeholder="c2">
+              </div>
+              <button class="btn-primary" id="solveKramerBtn">Tizimni yechish</button>
+              <div class="result-box" id="kramResult">...</div>
+            </div>
+
+            <!-- 73 & 74: Matritsa amallari va Determinant -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🔢</span> Matritsalar (2x2) va Determinant</h3>
+                <span class="fn-badge">#73, #74</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                <div>
+                  <div class="input-label" style="margin-bottom:4px;">Matritsa A:</div>
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                    <input type="number" class="input-field" id="m1_11" value="1">
+                    <input type="number" class="input-field" id="m1_12" value="2">
+                    <input type="number" class="input-field" id="m1_21" value="3">
+                    <input type="number" class="input-field" id="m1_22" value="4">
+                  </div>
+                </div>
+                <div>
+                  <div class="input-label" style="margin-bottom:4px;">Matritsa B:</div>
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                    <input type="number" class="input-field" id="m2_11" value="2">
+                    <input type="number" class="input-field" id="m2_12" value="0">
+                    <input type="number" class="input-field" id="m2_21" value="1">
+                    <input type="number" class="input-field" id="m2_22" value="3">
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn-primary" style="flex:1;" id="matAddBtn">A + B</button>
+                <button class="btn-primary" style="flex:1;" id="matMulBtn">A × B</button>
+                <button class="btn-secondary" style="flex:1;" id="matDetBtn">det(A)</button>
+              </div>
+              <div class="result-box" id="matrixResult">...</div>
+            </div>
+
+            <!-- 75, 76, 77: Proporsiya, Foiz masalalari, Soddalashtirish -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⚖️</span> Nisbat va Proporsiya (A / B = C / X)</h3>
+                <span class="fn-badge">#75</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items:center; gap:6px;">
+                <input type="number" class="input-field" id="propA" value="4">
+                <span>/</span>
+                <input type="number" class="input-field" id="propB" value="10">
+                <span>=</span>
+                <input type="number" class="input-field" id="propC" value="8">
+                <span>/</span>
+                <span style="font-weight:bold; color:var(--primary);">X</span>
+              </div>
+              <button class="btn-primary" id="solvePropBtn">X ni topish</button>
+              <div class="result-box" id="propResult">...</div>
+            </div>
+
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🎯</span> Foiz Masalalari va Soddalashtirish</h3>
+                <span class="fn-badge">#76, #77</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Son 1:</label>
+                  <input type="number" class="input-field" id="pctVal1" value="50">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Son 2:</label>
+                  <input type="number" class="input-field" id="pctVal2" value="200">
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Masala turi:</label>
+                <select class="select-field" id="pctProblemType">
+                  <option value="of">Son 1 ning Son 2 foizi qancha?</option>
+                  <option value="is_what_pct">Son 1 soni Son 2 ning necha foizi?</option>
+                  <option value="change">Son 1 dan Son 2 ga o'zgarish foizi?</option>
+                </select>
+              </div>
+              <button class="btn-primary" id="solvePctBtn">Masalani yechish</button>
+              <div class="result-box" id="pctResult">...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 7: MAXSUS HISOB-KITOBLAR (78–84)
+             ================================================================== -->
+        <section class="section-pane" id="sec-special">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_special">Maxsus Matematik Hisob-Kitoblar</h2>
+              <p data-i18n="desc_special">78–84: Kasrlar, aralash sonlar, EKUB, EKUK, promille va yaxlitlash</p>
+            </div>
+            <span class="section-count-tag">78–84 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 78: Promille -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>‰</span> Foiz va Promille (‰)</h3>
+                <span class="fn-badge">#78</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Asosiy son:</label>
+                  <input type="number" class="input-field" id="promilleBase" value="5000">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Miqdor:</label>
+                  <input type="number" class="input-field" id="promilleRate" value="15">
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Birlik:</label>
+                <select class="select-field" id="promilleType">
+                  <option value="promille">Promille (‰ - mingdan bir)</option>
+                  <option value="percent">Foiz (% - yuzdan bir)</option>
+                </select>
+              </div>
+              <button class="btn-primary" id="calcPromilleBtn">Hisoblash</button>
+              <div class="result-box" id="promilleResult">...</div>
+            </div>
+
+            <!-- 79: Aralash sonlar -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>½</span> Aralash Sonlar Bilan Amallar</h3>
+                <span class="fn-badge">#79</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <input type="number" class="input-field" id="mixW1" value="2" placeholder="Butun" style="width:70px;">
+                <div style="display:flex; flex-direction:column; gap:2px; width:70px;">
+                  <input type="number" class="input-field" id="mixN1" value="1" placeholder="Surat">
+                  <input type="number" class="input-field" id="mixD1" value="3" placeholder="Maxraj">
+                </div>
+                <select class="select-field" id="mixOp" style="width:65px;">
+                  <option value="+">+</option>
+                  <option value="-">−</option>
+                  <option value="*">×</option>
+                  <option value="/">÷</option>
+                </select>
+                <input type="number" class="input-field" id="mixW2" value="1" placeholder="Butun" style="width:70px;">
+                <div style="display:flex; flex-direction:column; gap:2px; width:70px;">
+                  <input type="number" class="input-field" id="mixN2" value="1" placeholder="Surat">
+                  <input type="number" class="input-field" id="mixD2" value="2" placeholder="Maxraj">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcMixedBtn">Aralash sonlarni hisoblash</button>
+              <div class="result-box" id="mixResult">...</div>
+            </div>
+
+            <!-- 80 & 81: Kasrlar qisqartirish va O'nli -> Oddiy -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>➗</span> Kasrlarni Qo'shish va Qisqartirish</h3>
+                <span class="fn-badge">#80, #81</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div style="display:flex; flex-direction:column; gap:2px; flex:1;">
+                  <input type="number" class="input-field" id="fracN1" value="3" placeholder="Surat 1">
+                  <input type="number" class="input-field" id="fracD1" value="4" placeholder="Maxraj 1">
+                </div>
+                <select class="select-field" id="fracOp" style="width:60px;">
+                  <option value="+">+</option>
+                  <option value="-">−</option>
+                  <option value="*">×</option>
+                  <option value="/">÷</option>
+                </select>
+                <div style="display:flex; flex-direction:column; gap:2px; flex:1;">
+                  <input type="number" class="input-field" id="fracN2" value="2" placeholder="Surat 2">
+                  <input type="number" class="input-field" id="fracD2" value="5" placeholder="Maxraj 2">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcFracBtn">Kasrlarni hisoblash</button>
+              <div class="result-box" id="fracResult">...</div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+
+              <div class="input-group">
+                <label class="input-label">O'nli kasr (masalan: 0.625):</label>
+                <input type="number" step="any" class="input-field" id="decInput" value="0.625">
+              </div>
+              <button class="btn-secondary" id="calcDecToFracBtn">Oddiy kasrga aylantirish</button>
+              <div class="result-box" id="decResult">...</div>
+            </div>
+
+            <!-- 82, 83, 84: EKUB, EKUK va Yaxlitlash -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🎯</span> EKUB, EKUK va Yaxlitlash</h3>
+                <span class="fn-badge">#82–#84</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Sonlarni vergul bilan kiriting (kamida 2 ta):</label>
+                <input type="text" class="input-field" id="gcdNumbersInput" value="24, 36, 60">
+              </div>
+              <button class="btn-primary" id="calcGcdLcmBtn">EKUB va EKUK topish</button>
+              <div class="result-box" id="gcdLcmResult">...</div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+
+              <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:8px;">
+                <div class="input-group">
+                  <label class="input-label">Son:</label>
+                  <input type="number" step="any" class="input-field" id="roundNumInput" value="3.14159265">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Xona:</label>
+                  <input type="number" class="input-field" id="roundDigits" value="2">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Usul:</label>
+                  <select class="select-field" id="roundMode">
+                    <option value="round">Oddiy</option>
+                    <option value="floor">Pastga</option>
+                    <option value="ceil">Yuqoriga</option>
+                    <option value="trunc">Kesish</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-secondary" id="calcRoundBtn">Yaxlitlash</button>
+              <div class="result-box" id="roundResult">...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 8: KALENDAR VA VAQT (95–100)
+             ================================================================== -->
+        <section class="section-pane" id="sec-calendar">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_calendar">Kalendar va Vaqt Kalkulyatori</h2>
+              <p data-i18n="desc_calendar">95–100: Sana farqi, hafta kuni, kabisa yili, orqaga hisoblash</p>
+            </div>
+            <span class="section-count-tag">95–100 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 95 & 96: Sana va vaqt farqi -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📅</span> Ikki Sana Orasidagi Kunlar</h3>
+                <span class="fn-badge">#95</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">1-sana:</label>
+                  <input type="date" class="input-field" id="dateDiff1">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">2-sana:</label>
+                  <input type="date" class="input-field" id="dateDiff2">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcDateDiffBtn">Sana farqini hisoblash</button>
+              <div class="result-box" id="dateDiffResult">...</div>
+            </div>
+
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⏰</span> Vaqt Farqi (Soat va Daqiqa)</h3>
+                <span class="fn-badge">#96</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="input-group">
+                  <label class="input-label">Boshlanish vaqti:</label>
+                  <input type="time" class="input-field" id="timeVal1" value="09:00">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Tugash vaqti:</label>
+                  <input type="time" class="input-field" id="timeVal2" value="18:30">
+                </div>
+              </div>
+              <button class="btn-primary" id="calcTimeDiffBtn">Vaqt farqini hisoblash</button>
+              <div class="result-box" id="timeDiffResult">...</div>
+            </div>
+
+            <!-- 97 & 98: Hafta kuni va Kabisa yili -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📆</span> Sana Bo'yicha Hafta Kuni & Hafta Raqami</h3>
+                <span class="fn-badge">#97, #99</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Sanani tanlang:</label>
+                <input type="date" class="input-field" id="dayOfWeekDate">
+              </div>
+              <button class="btn-primary" id="calcDayOfWeekBtn">Hafta kunini aniqlash</button>
+              <div class="result-box" id="dayOfWeekResult">...</div>
+            </div>
+
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>❄️</span> Kabisa Yili & Tadbirgacha Vaqt (Countdown)</h3>
+                <span class="fn-badge">#98, #100</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Yilni kiriting:</label>
+                <input type="number" class="input-field" id="leapYearInput" value="2028">
+              </div>
+              <button class="btn-secondary" id="calcLeapYearBtn">Kabisa yilini tekshirish</button>
+              <div class="result-box" id="leapYearResult">...</div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:6px 0;">
+
+              <div class="input-group">
+                <label class="input-label">Tadbir sanasi va vaqti:</label>
+                <input type="datetime-local" class="input-field" id="countdownTarget">
+              </div>
+              <button class="btn-primary" id="startCountdownBtn">Countdown boshlash</button>
+              <div class="result-box" id="countdownResult">Taymer boshlanmagan</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 9: O'YINLAR VA MASHQLAR (101–106)
+             ================================================================== -->
+        <section class="section-pane" id="sec-games">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_games">O'yinlar va Aqliy Mashqlar</h2>
+              <p data-i18n="desc_games">101–106: Sudoku, tezkor matematika, miya mashqi, numerologiya</p>
+            </div>
+            <span class="section-count-tag">101–106 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 101: Sudoku -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🧩</span> Sudoku Generatori</h3>
+                <span class="fn-badge">#101</span>
+              </div>
+              <button class="btn-primary" id="genSudokuBtn">Yangi Sudoku yaratish</button>
+              <div id="sudokuGrid"></div>
+              <div style="font-size:12px; color:var(--text-muted); text-align:center;" id="sudokuNote"></div>
+            </div>
+
+            <!-- 102: Matematik o'yin -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🎯</span> Matematik Misollar Viktorinasi</h3>
+                <span class="fn-badge">#102</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Qiyinchilik darajasi:</label>
+                <select class="select-field" id="quizDifficulty">
+                  <option value="easy">Oson (1–20)</option>
+                  <option value="medium">O'rta (1–100)</option>
+                  <option value="hard">Qiyin (1–500)</option>
+                </select>
+              </div>
+              <div class="result-box" style="text-align:center;">
+                <div style="font-size:26px; font-weight:bold; color:var(--primary);" id="quizQuestion">?</div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <input type="number" class="input-field" id="quizAnswerInput" placeholder="Javobingiz">
+                <button class="btn-primary" id="checkQuizBtn">Tekshirish</button>
+                <button class="btn-secondary" id="newQuizBtn">Yangi savol</button>
+              </div>
+              <div id="quizResult" style="text-align:center; min-height:24px;"></div>
+            </div>
+
+            <!-- 103: Tez hisoblash testi (60s) -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⚡</span> Tez Hisoblash Testi (60s Challenge)</h3>
+                <span class="fn-badge">#103</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>Qolgan vaqt: <strong id="speedTimerDisplay" style="color:var(--accent-red);">60 soniya</strong></div>
+                <div>Ball: <strong id="speedScore" style="color:var(--accent-green); font-size:20px;">0</strong></div>
+              </div>
+              <button class="btn-primary" id="startSpeedBtn">Testni boshlash (Start)</button>
+              <div class="result-box" style="text-align:center;">
+                <div style="font-size:24px; font-weight:bold;" id="speedQuestion">Start tugmasini bosing!</div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <input type="number" class="input-field" id="speedInput" disabled placeholder="Javobni yozing va Enter bosing">
+                <button class="btn-secondary" id="speedSubmitBtn">OK</button>
+              </div>
+            </div>
+
+            <!-- 104, 105, 106: Aqliy mashq, RNG va Numerologiya -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🧠</span> Aqliy Mashq, RNG va Numerologiya</h3>
+                <span class="fn-badge">#104–#106</span>
+              </div>
+              <button class="btn-secondary" id="mentalPracticeBtn">💡 Aqliy hisoblash sirlarini ko'rish</button>
+              <div class="result-box" id="mentalTipBox">Sirlarni ko'rish tugmasini bosing.</div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+                <div class="input-group">
+                  <label class="input-label">Min:</label>
+                  <input type="number" class="input-field" id="rngMin" value="1">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Max:</label>
+                  <input type="number" class="input-field" id="rngMax" value="100">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Soni:</label>
+                  <input type="number" class="input-field" id="rngCount" value="5">
+                </div>
+              </div>
+              <button class="btn-primary" id="genRngBtn">Tasodifiy sonlar (RNG)</button>
+              <div class="result-box" id="rngResult">...</div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+
+              <div class="input-group">
+                <label class="input-label">Tug'ilgan sanangiz (Numerologiya):</label>
+                <input type="date" class="input-field" id="numBirthDate" value="2000-01-01">
+              </div>
+              <button class="btn-secondary" id="calcNumerologyBtn">Taqdir raqamini hisoblash</button>
+              <div class="result-box" id="numResult">...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 10: INNOVATSIYA VA AI (107–114)
+             ================================================================== -->
+        <section class="section-pane" id="sec-innovation">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_innovation">Yangi & Innovatsion Funksiyalar</h2>
+              <p data-i18n="desc_innovation">107–114: AI yordamchi, ovozli kiritish, QR/Shtrix-kod, taymer va bloknot</p>
+            </div>
+            <span class="section-count-tag">107–114 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- 107: AI yordamchisi -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🤖</span> AI Yordamchisi: Formulani Tushuntirish</h3>
+                <span class="fn-badge">#107</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Savol yoki matematik ifodani kiriting:</label>
+                <textarea class="input-field" id="aiQueryInput" rows="2" placeholder="Masalan: Pifagor teoremasi qanday ishlaydi? Yoki 2^10 nega 1024?" data-i18n-ph="ai_ask_placeholder"></textarea>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Gemini / OpenAI API kaliti (ixtiyoriy, lokal baza ham mavjud):</label>
+                <input type="password" class="input-field" id="aiApiKeyInput" placeholder="AI kalitni kiritish ixtiyoriy">
+              </div>
+              <button class="btn-primary" id="aiAskBtn" data-i18n="ai_ask_btn">AI dan so'rash</button>
+              <div class="result-box" id="aiResult" style="max-height:180px; overflow-y:auto; line-height:1.5;">
+                Savolingizni kiriting va AI yordamchidan batafsil matematik tushuntirish oling.
+              </div>
+            </div>
+
+            <!-- 108 & 109: Ovozli kiritish va Bosqichma-bosqich yechim -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>🎙️</span> Ovozli Kiritish & Bosqichma-bosqich Yechim</h3>
+                <span class="fn-badge">#108, #109</span>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <button class="btn-primary" id="voiceInputBtn">🎙️ Ovozli kiritish</button>
+                <span id="voiceStatusText" style="font-size:12px; color:var(--primary); font-weight:600;"></span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Matematik ifoda:</label>
+                <input type="text" class="input-field" id="stepExprInput" value="(15 + 5) * 2 - 10 / 2">
+              </div>
+              <button class="btn-secondary" id="stepSolverBtn">Bosqichma-bosqich yechish</button>
+              <div class="result-box" id="stepResult">...</div>
+            </div>
+
+            <!-- 110: Raqamni so'z bilan yozish -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📝</span> Raqamni So'z Bilan Yozish (UZ, RU, EN)</h3>
+                <span class="fn-badge">#110</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Sonni kiriting:</label>
+                <input type="number" class="input-field" id="numToWordsInput" value="1234567">
+              </div>
+              <button class="btn-primary" id="numToWordsBtn">So'z bilan yozish</button>
+              <div class="result-box" id="numToWordsResult">...</div>
+            </div>
+
+            <!-- 111 & 112: QR-kod va Shtrix-kod -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📱</span> QR-kod va Shtrix-kod Yaratish</h3>
+                <span class="fn-badge">#111, #112</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">QR uchun matn yoki son:</label>
+                <input type="text" class="input-field" id="qrTextInput" value="OmniCalc 114: Natija = 999">
+              </div>
+              <button class="btn-primary" id="genQrBtn">QR-kod yaratish</button>
+              <div style="display:flex; justify-content:center; padding:10px;" id="qrCodeContainer"></div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:4px 0;">
+
+              <div class="input-group">
+                <label class="input-label">Shtrix-kod matni (Barcode):</label>
+                <input type="text" class="input-field" id="barcodeInput" value="1234567890">
+              </div>
+              <button class="btn-secondary" id="genBarcodeBtn">Shtrix-kod yaratish</button>
+              <div style="display:flex; justify-content:center; padding:10px;">
+                <svg id="barcodeSvg"></svg>
+              </div>
+            </div>
+
+            <!-- 113: Sekundomer va Taymer -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⏱️</span> Sekundomer va Taymer</h3>
+                <span class="fn-badge">#113</span>
+              </div>
+              <div style="text-align:center; padding:10px;">
+                <div style="font-size:32px; font-weight:bold; font-family:monospace; color:var(--primary);" id="swDisplay">00:00.00</div>
+                <div style="display:flex; justify-content:center; gap:8px; margin-top:8px;">
+                  <button class="btn-primary btn-sm" id="swStartBtn">Start</button>
+                  <button class="btn-secondary btn-sm" id="swResetBtn">Reset</button>
+                </div>
+              </div>
+
+              <hr style="border:none; border-top:1px solid var(--border-color); margin:6px 0;">
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div class="input-group">
+                  <label class="input-label">Daqiqa:</label>
+                  <input type="number" class="input-field" id="tmMinutesInput" value="5">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Soniya:</label>
+                  <input type="number" class="input-field" id="tmSecondsInput" value="0">
+                </div>
+              </div>
+              <button class="btn-primary" id="tmStartBtn" style="margin-top:8px;">Taymerni boshlash</button>
+              <div class="result-box" style="text-align:center;">
+                <div style="font-size:26px; font-weight:bold; font-family:monospace;" id="tmDisplay">05:00</div>
+              </div>
+            </div>
+
+            <!-- 114: Mini-Notepad -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>📓</span> Eslatmalar Uchun Mini-Notepad</h3>
+                <span class="fn-badge">#114</span>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Hisob-kitoblar va eslatmalar (avtomatik saqlanadi):</label>
+                <textarea class="input-field" id="calcNotepad" rows="8" placeholder="Bu yerda muhim hisoblaringiz va eslatmalaringizni yozib qoldirishingiz mumkin. Ular xotirada doimiy saqlanadi..."></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 11: QULAYLIK VA SOZLAMALAR (85–94)
+             ================================================================== -->
+        <section class="section-pane" id="sec-settings">
+          <div class="section-header-banner">
+            <div>
+              <h2 data-i18n="sec_settings">Qulaylik va Sozlamalar</h2>
+              <p data-i18n="desc_settings">85–94: Tarix, xotira, PDF/CSV eksport, sozlamalar va til</p>
+            </div>
+            <span class="section-count-tag">85–94 Funksiyalar</span>
+          </div>
+
+          <div class="grid-2">
+            <!-- Sozlamalar kartasi -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⚙️</span> Asosiy Sozlamalar</h3>
+                <span class="fn-badge">#88, #90, #91</span>
+              </div>
+              
+              <div class="input-group">
+                <label class="input-label" data-i18n="setting_precision">Sonlar aniqligi (kasr xonasi):</label>
+                <input type="number" class="input-field" id="settingPrecisionInput" min="0" max="12" value="8">
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border-color);">
+                <span style="font-size:14px; font-weight:500;" data-i18n="setting_sound">Tugmalar bosilganda ovoz chiqarish:</span>
+                <input type="checkbox" id="settingSoundToggle" checked style="width:20px; height:20px; cursor:pointer;">
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 0;">
+                <span style="font-size:14px; font-weight:500;">Tungi / Kunduzgi mavzu rejimi:</span>
+                <button class="btn-secondary btn-sm" onclick="window.AppHistory && window.AppHistory.toggleTheme()">Mavzuni almashtirish 🌓</button>
+              </div>
+            </div>
+
+            <!-- Klaviatura yordami -->
+            <div class="card">
+              <div class="card-title-row">
+                <h3><span>⌨️</span> Klaviatura Boshqaruvi Qo'llanmasi</h3>
+                <span class="fn-badge">#87</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; font-size:13.5px;">
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">0–9</kbd> Raqamlar</div>
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">Enter</kbd> Yechish (=)</div>
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">+</kbd> <kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">-</kbd> <kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">*</kbd> <kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">/</kbd> Amallar</div>
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">Backspace</kbd> O'chirish (⌫)</div>
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">^</kbd> Daraja ko'tarish</div>
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">Esc / C</kbd> Tozalash (C)</div>
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">(</kbd> <kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">)</kbd> Qavslar</div>
+                <div><kbd style="padding:2px 6px; background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:4px;">.</kbd> Kasr nuqtasi</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       SETTINGS MODAL
+       ====================================================================== -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 data-i18n="settings_title">Ilova Sozlamalari</h3>
+        <button class="modal-close-btn" id="closeSettingsModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13.5px; color:var(--text-secondary);">
+          OmniCalc 114 — har qanday murakkab hisob-kitoblar, ilmiy, moliyaviy va dasturlash ehtiyojlari uchun yaratilgan universal platforma.
+        </p>
+        <div class="input-group">
+          <label class="input-label" data-i18n="setting_precision">Hisoblash aniqligi (kasr xonasi):</label>
+          <input type="number" class="input-field" min="0" max="12" value="8">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- SCRIPTS -->
+  <script src="js/translations.js"></script>
+  <script src="js/core-calc.js"></script>
+  <script src="js/converter.js"></script>
+  <script src="js/finance.js"></script>
+  <script src="js/dev-tools.js"></script>
+  <script src="js/graph-stats.js"></script>
+  <script src="js/algebra.js"></script>
+  <script src="js/special-math.js"></script>
+  <script src="js/time-date.js"></script>
+  <script src="js/games-practice.js"></script>
+  <script src="js/innovation-ai.js"></script>
+  <script src="js/settings-history.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
